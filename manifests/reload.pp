@@ -14,7 +14,7 @@
 # @example
 #   include dnsmasq::reload
 class dnsmasq::reload {
-    exec { '/usr/bin/pkill -HUP dnsmasq':
+  exec { '/usr/bin/pkill -HUP dnsmasq':
     refreshonly => true,
   }
 }

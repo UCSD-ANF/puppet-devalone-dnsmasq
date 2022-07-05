@@ -476,15 +476,15 @@ class dnsmasq (
   contain dnsmasq::config
   contain dnsmasq::service
 
-  Class['::dnsmasq::install']
-  -> Class['::dnsmasq::config']
-  ~> Class['::dnsmasq::service']
+  Class['dnsmasq::install']
+  -> Class['dnsmasq::config']
+  ~> Class['dnsmasq::service']
 
-  class { '::dnsmasq::reload':
-    require => Class['::dnsmasq::service'],
+  class { 'dnsmasq::reload':
+    require => Class['dnsmasq::service'],
   }
 
-  if $::settings::storeconfigs {
+  if defined('$settings::storeconfigs') and $settings::storeconfigs == true {
     File_line <<| tag == 'dnsmasq-host' |>>
   }
 
