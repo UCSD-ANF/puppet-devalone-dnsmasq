@@ -5,4 +5,10 @@
 #
 # See https://github.com/puppetlabs/pdk-templates/blob/main/config_defaults.yml
 # for the default values.
---- {}
+---
+.editorconfig:
+  unmanaged: false
+Rakefile:
+  extras:
+    - "FastGettext.default_text_domain = 'default-text-domain'"
+    - "Puppet[:disable_i18n] = true"

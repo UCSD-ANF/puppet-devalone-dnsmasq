@@ -84,18 +84,15 @@
 #   By  default,  dnsmasq  will  send queries to any of the upstream servers it knows about and
 #   tries to favour servers to are  known to  be  up. Uncommenting this forces dnsmasq to try
 #   each query with  each  server  strictly in the order they appear in /etc/resolv.conf
-#   严格按照 resolv.conf 中的顺序进行查找
 #
 # @param no_resolv
 #   If you don't want dnsmasq to read /etc/resolv.conf or any other file, getting its servers
 #   from this file instead (see below). Get upstream servers only from the command line or the
 #   dnsmasq configuration file.
-#   不读取 resolv-file 来确定上游服务器
 #
 # @param no_poll
 #   If you don't want dnsmasq to poll /etc/resolv.conf or other resolv files for changes and 
 #   re-read them then set this attribute true.
-#   不检测 /etc/resolv.conf 的变化
 #
 # @param other_name_servers
 #   Add other name servers here, with domain specs if they are for non-public domains.
