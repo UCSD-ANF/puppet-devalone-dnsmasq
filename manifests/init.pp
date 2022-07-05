@@ -383,12 +383,27 @@
 # @param dhcp_ignore_names
 #   Mapping to dnsmasq::conf `dhcp_ignore_names` attribute.
 #
+# @param package_name
+#   Name of the package (or packages) to manage for a given platform.
+#
+# @param service_name
+#   Name of the service (or services) to manage for a given platform.
+#
+# @param config_file
+#   Full path to the configuration file to managed for a given platform.
+#
+# @param config_dir
+#   Full path to the configuration directory (included configuration snippets) for a given platform.
 #
 class dnsmasq (
   Boolean                               $package_manage,
   String                                $package_ensure,
   Boolean                               $service_control,
   Boolean                               $purge_config_dir,
+  Variant[String[1], Array[String[1]]]  $package_name,
+  Variant[String[1], Array[String[1]]]  $service_name,
+  Stdlib::Absolutepath                  $config_file,
+  Stdlib::Absolutepath                  $config_dir,
 
   # Mapping to dnsmasq::conf attributes
   Enum['present','file','absent']       $conf_ensure,
@@ -467,8 +482,7 @@ class dnsmasq (
   Optional[Array[String[1]]]            $dhcp_name_match,
   Optional[String[1]]                   $dhcp_ignore_names,
 ) {
-  include dnsmasq::params
-
+  include stdlib
   contain dnsmasq::install
   contain dnsmasq::config
   contain dnsmasq::service

@@ -9,7 +9,6 @@
 * [`dnsmasq`](#dnsmasq): Manage dnsmasq package install, configure file and service.
 * [`dnsmasq::config`](#dnsmasqconfig): A short summary of the purpose of this class
 * [`dnsmasq::install`](#dnsmasqinstall): Install dnsmasq package
-* [`dnsmasq::params`](#dnsmasqparams): A short summary of the purpose of this class
 * [`dnsmasq::reload`](#dnsmasqreload): Send a HUP signal to any dnsmasq processes in order to reload changes.
 * [`dnsmasq::service`](#dnsmasqservice): Manage the dnsmasq service
 
@@ -743,18 +742,6 @@ This class use the dnsmasq params to install or uninstall the dnsmasq package, a
 
 ```puppet
 include dnsmasq::install
-```
-
-### <a name="dnsmasqparams"></a>`dnsmasq::params`
-
-A description of what this class does
-
-#### Examples
-
-##### 
-
-```puppet
-include dnsmasq::params
 ```
 
 ### <a name="dnsmasqreload"></a>`dnsmasq::reload`

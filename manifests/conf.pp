@@ -1191,8 +1191,8 @@ define dnsmasq::conf (
   Optional[Array[String[1]]]            $dhcp_name_match       = undef,
   Optional[String[1]]                   $dhcp_ignore_names     = undef,
 ) {
-
-  include ::dnsmasq
+  include stdlib
+  include dnsmasq
 
   File {
     owner => 'root',
@@ -1200,14 +1200,14 @@ define dnsmasq::conf (
   }
 
   if $source {
-    file { "${dnsmasq::params::config_dir}${priority}-${name}.conf":
+    file { "${dnsmasq::config_dir}${priority}-${name}.conf":
       ensure => $ensure,
       source => $source,
       notify => Class['dnsmasq::service'],
     }
   }
   else {
-    file { "${dnsmasq::params::config_dir}${priority}-${name}.conf":
+    file { "${dnsmasq::config_dir}${priority}-${name}.conf":
       ensure  => $ensure,
       content => template('dnsmasq/dnsmasq.conf.erb'),
       notify  => Class['dnsmasq::service'],

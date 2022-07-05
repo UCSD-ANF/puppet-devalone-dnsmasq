@@ -5,8 +5,10 @@
 # @example
 #   include dnsmasq::service
 class dnsmasq::service {
+  include dnsmasq
+
   if $dnsmasq::service_control {
-    service { $dnsmasq::params::service_name:
+    service { $dnsmasq::service_name:
       ensure     => 'running',
       enable     => true,
       hasrestart => true,

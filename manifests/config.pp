@@ -5,12 +5,14 @@
 # @example
 #   include dnsmasq::config
 class dnsmasq::config {
+  include dnsmasq
+
   File {
     owner => 'root',
     group => 'root',
   }
 
-  file { $::dnsmasq::params::config_file:
+  file { $dnsmasq::config_file:
     mode   => '0644',
     source => 'puppet:///modules/dnsmasq/dnsmasq.conf',
   }

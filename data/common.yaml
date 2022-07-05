@@ -1,4 +1,8 @@
 ---
+dnsmasq::package_name: dnsmasq
+dnsmasq::service_name: dnsmasq
+dnsmasq::config_file: /etc/dnsmasq.conf
+dnsmasq::config_dir: /etc/dnsmasq.d
 dnsmasq::configs_hash: ~
 dnsmasq::hosts_hash: ~
 dnsmasq::dhcp_hosts_hash: ~
