@@ -12,6 +12,8 @@ dnsmasq::service_control: true
 dnsmasq::purge_config_dir: false
 
 # mirror to dnsmasq::conf attributes
+dnsmasq::log_facility: ~
+dnsmasq::dns_forward_max: 150
 dnsmasq::conf_ensure: present
 dnsmasq::conf_priority: 10
 dnsmasq::conf_source: ~

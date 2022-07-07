@@ -395,6 +395,25 @@
 # @param config_dir
 #   Full path to the configuration directory (included configuration snippets) for a given platform.
 #
+# @param log_facility
+#   Set the facility to which dnsmasq will send syslog entries, this defaults to DAEMON, and to LOCAL0
+#   when debug mode is in operation. If the facility given contains at least one '/' character, it is
+#   taken to be a filename, and dnsmasq logs to the given file, instead of syslog. If the facility is
+#   '-' then dnsmasq logs to stderr. (Errors whilst reading configuration will still go to syslog, but
+#   all output from a successful startup, and all output whilst running, will go exclusively to the
+#   file.) When logging to a file, dnsmasq will close and reopen the file when it receives SIGUSR2.
+#   This allows the log file to be rotated without stopping dnsmasq.
+#
+# @param dns_forward_max
+#   Set the maximum number of concurrent DNS queries. The default value is 150, which should be fine
+#   for most setups. The only known situation where this needs to be increased is when using
+#   web-server log file resolvers, which can generate large numbers of concurrent queries. This
+#   parameter actually controls the number of concurrent queries per server group, where a server
+#   group is the set of server(s) associated with a single domain. So if a domain has it's own
+#   server via --server=/example.com/1.2.3.4 and 1.2.3.4 is not responding, but queries for
+#   *.example.com cannot go elsewhere, then other queries will not be affected. On configurations
+#   with many such server groups and tight resources, this value may need to be reduced.
+#
 class dnsmasq (
   Boolean                               $package_manage,
   String                                $package_ensure,
@@ -406,6 +425,12 @@ class dnsmasq (
   Stdlib::Absolutepath                  $config_dir,
 
   # Mapping to dnsmasq::conf attributes
+  Variant[
+    Undef,
+    Stdlib::Absolutepath,
+    String[1,8]
+  ]                                     $log_facility,
+  Integer                               $dns_forward_max,
   Enum['present','file','absent']       $conf_ensure,
   Integer                               $conf_priority,
   Optional[Stdlib::Absolutepath]        $conf_source,
