@@ -2,7 +2,7 @@
 #
 # Installs a configuration file for dnsmasq
 #
-# @private
+# @api private
 #
 # @example
 #   include dnsmasq::config

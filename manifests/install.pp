@@ -2,6 +2,8 @@
 #
 # This class use the dnsmasq params to install or uninstall the dnsmasq package, and manage the config dir.
 #
+# @api private
+#
 # @example
 #   include dnsmasq::install
 class dnsmasq::install {
