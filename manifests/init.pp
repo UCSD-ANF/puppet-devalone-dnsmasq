@@ -34,7 +34,7 @@
 #
 # @param conf_source
 #   A source file, which will be copied into the configuration file. If this attribute is not `undef`, the
-#   other detail attributes that based on template to build the configuration file's content are ignored. 
+#   other detail attributes that based on template to build the configuration file's content are ignored.
 #   This attribute is for you that have some validate configuration files.
 #   Allowed values are:
 #     - `puppet`: URIs, which point to files in modules or Puppet file server mount points.
@@ -51,7 +51,7 @@
 #   Mapping to dnsmasq::conf `port` attribute.
 #
 # @param user
-#   Specify the userid  to which dnsmasq will change after startup. Dnsmasq must normally be started as root, 
+#   Specify the userid  to which dnsmasq will change after startup. Dnsmasq must normally be started as root,
 #   but it will drop root privileges after startup by changing id to another user. Normally this user is "dnsmasq"
 #   but that can be over-ridden with this switch.
 #
@@ -62,17 +62,20 @@
 #
 #   Mapping to dnsmasq::conf `group` attribute.
 #
+# @param root_group
+#    Specify the group that will own configuration files. Defaults to root, or wheel on FreeBSD.
+#
 # @param domain_needed
 #   Tells dnsmasq to never forward A or AAAA queries for plain names, without dots or domain parts, to
-#   upstream nameservers. If the name is not known from /etc/hosts or DHCP then a "not found" answer is returned. 
+#   upstream nameservers. If the name is not known from /etc/hosts or DHCP then a "not found" answer is returned.
 #
 #   Mapping to dnsmasq::conf `domain_needed` attribute.
 #
 # @param bogus_priv
-#   Bogus private reverse lookups. All reverse lookups for private IP ranges (ie 192.168.x.x, etc) 
-#   which are not found in /etc/hosts or the DHCP leases file are answered with "no such domain" 
+#   Bogus private reverse lookups. All reverse lookups for private IP ranges (ie 192.168.x.x, etc)
+#   which are not found in /etc/hosts or the DHCP leases file are answered with "no such domain"
 #   rather than being forwarded upstream. The set of prefixes affected is the list given in RFC6303,
-#   for IPv4 and IPv6. 
+#   for IPv4 and IPv6.
 #
 #   Mapping to dnsmasq::conf `bogus_priv` attribute.
 #
@@ -82,7 +85,7 @@
 #   Mapping to dnsmasq::conf `dnssec` attribute.
 #
 # @param dnssec_check_unsigned
-#   Replies which are not DNSSEC signed may be legitimate, because the domain is unsigned, or may be forgeries. 
+#   Replies which are not DNSSEC signed may be legitimate, because the domain is unsigned, or may be forgeries.
 #   Setting this option tells dnsmasq to check that an unsigned reply is OK, by finding a secure proof that a DS
 #   record somewhere between the root and the domain does not exist.
 #   The cost of setting this is that even queries in unsigned domains will need one or more extra DNS queries to verify.
@@ -90,26 +93,26 @@
 #   Mapping to dnsmasq::conf `dnssec_check_unsigned` attribute.
 #
 # @param filterwin2k
-#   Setup this attr true to filter useless windows-originated DNS requests which can trigger dial-on-demand links 
+#   Setup this attr true to filter useless windows-originated DNS requests which can trigger dial-on-demand links
 #   needlessly. Note that (amongst other things) this blocks all SRV requests, so don't use it if you use eg Kerberos,
-#   SIP, XMMP or Google-talk. This option only affects forwarding, SRV records originating for dnsmasq (via srv-host= 
+#   SIP, XMMP or Google-talk. This option only affects forwarding, SRV records originating for dnsmasq (via srv-host=
 #   lines) are not suppressed by it.
 #
 #   Mapping to dnsmasq::conf `filterwin2k` attribute.
 #
 # @param resolv_file
 #   Read the IP addresses of the upstream nameservers from <file>, instead of /etc/resolv.conf. For the
-#   format of this file see resolv.conf(5). 
-#   The only lines relevant to dnsmasq are nameserver ones. Dnsmasq can be told to poll more than one 
-#   resolv.conf file, the first file name specified overrides the default, subsequent ones add to the 
-#   list. This is only allowed when polling; the file with the currently latest modification time is 
-#   the one used. 
-#   Change this line if you want dns to get its upstream servers from somewhere other that /etc/resolv.conf. 
+#   format of this file see resolv.conf(5).
+#   The only lines relevant to dnsmasq are nameserver ones. Dnsmasq can be told to poll more than one
+#   resolv.conf file, the first file name specified overrides the default, subsequent ones add to the
+#   list. This is only allowed when polling; the file with the currently latest modification time is
+#   the one used.
+#   Change this line if you want dns to get its upstream servers from somewhere other that /etc/resolv.conf.
 #   For example, set this attr's value: '/etc/resolv.conf.dnsmasq':
 #
 #   resolv_file => '/etc/resolv.conf.dnsmasq',
 #
-#   Mapping to dnsmasq::conf `resolv_file` attribute. 
+#   Mapping to dnsmasq::conf `resolv_file` attribute.
 #
 # @param strict_order
 #   By  default,  dnsmasq  will  send queries to any of the upstream servers it knows about and
@@ -126,7 +129,7 @@
 #   Mapping to dnsmasq::conf `no_resolv` attribute.
 #
 # @param no_poll
-#   If you don't want dnsmasq to poll /etc/resolv.conf or other resolv files for changes and 
+#   If you don't want dnsmasq to poll /etc/resolv.conf or other resolv files for changes and
 #   re-read them then set this attribute true.
 #
 #   Mapping to dnsmasq::conf `no_poll` attribute.
@@ -148,7 +151,7 @@
 # @param local_only_domains
 #   Add local-only domains here, queries in these domains are answered from /etc/hosts or DHCP only.
 #   e.g:
-#       local_only_domains => ['/local-example1.org/', '/local-example2.org/'], 
+#       local_only_domains => ['/local-example1.org/', '/local-example2.org/'],
 #
 #   Mapping to dnsmasq::conf `local_only_domains` attribute.
 #
@@ -156,7 +159,7 @@
 #   Add domains which you want to force to an IP address here.
 #   The example below send any host in double-click.net to a local web-server.
 #     domains_force_to_ip => ['/double-click.net/127.0.0.1'],
-#   
+#
 #   work with IPv6 addresses too.
 #     domains_force_to_ip => ['/www.thekelleys.org.uk/fe80::20d:60ff:fe36:f83'],
 #
@@ -238,7 +241,7 @@
 # @param addn_hosts
 #   Additional hosts file. Read the specified file as well as /etc/hosts. If `no_hosts` is given,
 #   read only the specified file. This option may be repeated for more than one additional hosts file.
-#   If a directory is given, then read all the files contained in that directory in alphabetical order. 
+#   If a directory is given, then read all the files contained in that directory in alphabetical order.
 #   e.g
 #
 #     addn_hosts => ['/etc/banner_add_hosts1', '/etc/banner_add_hosts2'],
@@ -423,6 +426,7 @@ class dnsmasq (
   Variant[String[1], Array[String[1]]]  $service_name,
   Stdlib::Absolutepath                  $config_file,
   Stdlib::Absolutepath                  $config_dir,
+  String                                $root_group,
 
   # Mapping to dnsmasq::conf attributes
   Variant[

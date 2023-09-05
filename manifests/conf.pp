@@ -31,6 +31,9 @@
 #     - `file`: URIs, which behave the same as local file paths.
 #     - `http(s)`: URIs, which point to files served by common web servers.
 #
+# @param root_group
+#    Specify the group that will own the configuration file. Defaults to "root" or "wheel" depending on the platform.
+#
 # @param port
 #   Listen on this specific port instead of the standard DNS port (53). Setting this to zero completely disables
 #   DNS function, leaving only DHCP and/or TFTP.
@@ -1129,6 +1132,7 @@ define dnsmasq::conf (
   Enum['present','file','absent']       $ensure                = 'present',
   Integer                               $priority              = 10,
   Optional[Stdlib::Absolutepath]        $source                = undef,
+  Optional[String]                      $root_group            = undef,
 
   # conf params
   Optional[String[1]]                   $port                  = undef,
@@ -1218,9 +1222,14 @@ define dnsmasq::conf (
   include stdlib
   include dnsmasq
 
+  $root_group_real = $root_group ? {
+    undef => $dnsmasq::root_group,
+    default => $root_group,
+  }
+
   File {
     owner => 'root',
-    group => 'root',
+    group => $root_group_real,
   }
 
   if $source {

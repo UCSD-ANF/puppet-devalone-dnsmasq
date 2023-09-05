@@ -1,15 +1,27 @@
-# @summary A short summary of the purpose of this class
+# @summary Install the main configuration file
 #
-# A description of what this class does
+# Installs a configuration file for dnsmasq
+#
+# @private
 #
 # @example
 #   include dnsmasq::config
-class dnsmasq::config {
+#
+# @param root_group
+#   Override the file group ownership
+class dnsmasq::config (
+  Optional[String] $root_group = undef,
+) {
   include dnsmasq
+
+  $root_group_real = $root_group ? {
+    undef => $dnsmasq::root_group,
+    default => $root_group,
+  }
 
   File {
     owner => 'root',
-    group => 'root',
+    group => $root_group_real,
   }
 
   file { $dnsmasq::config_file:

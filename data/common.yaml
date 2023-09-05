@@ -10,6 +10,7 @@ dnsmasq::package_manage: true
 dnsmasq::package_ensure: installed
 dnsmasq::service_control: true
 dnsmasq::purge_config_dir: false
+dnsmasq::root_group: 'wheel'
 
 # mirror to dnsmasq::conf attributes
 dnsmasq::log_facility: ~
