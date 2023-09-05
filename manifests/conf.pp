@@ -10,7 +10,7 @@
 # values, entries are collected as they occur in files sorted by `priority` values.
 #
 # @example
-#   dnsmasq::conf { 'dnsmasq': 
+#   dnsmasq::conf { 'dnsmasq':
 #     resolv_file        => '/etc/resolv.conf.dnsmasq',
 #     local_only_domains => ['/example.org/'],
 #   }
@@ -23,7 +23,7 @@
 #
 # @param source
 #   A source file, which will be copied into the configuration file. If this attribute is not `undef`, the
-#   other detail attributes that based on template to build the configuration file's content are ignored. 
+#   other detail attributes that based on template to build the configuration file's content are ignored.
 #   This attribute is for you that have some validate configuration files.
 #   Allowed values are:
 #     - `puppet`: URIs, which point to files in modules or Puppet file server mount points.
@@ -36,7 +36,7 @@
 #   DNS function, leaving only DHCP and/or TFTP.
 #
 # @param user
-#   Specify the userid  to which dnsmasq will change after startup. Dnsmasq must normally be started as root, 
+#   Specify the userid  to which dnsmasq will change after startup. Dnsmasq must normally be started as root,
 #   but it will drop root privileges after startup by changing id to another user. Normally this user is "dnsmasq"
 #   but that can be over-ridden with this switch.
 #
@@ -45,37 +45,37 @@
 #
 # @param domain_needed
 #   Tells dnsmasq to never forward A or AAAA queries for plain names, without dots or domain parts, to
-#   upstream nameservers. If the name is not known from /etc/hosts or DHCP then a "not found" answer is returned. 
+#   upstream nameservers. If the name is not known from /etc/hosts or DHCP then a "not found" answer is returned.
 #
 # @param bogus_priv
-#   Bogus private reverse lookups. All reverse lookups for private IP ranges (ie 192.168.x.x, etc) 
-#   which are not found in /etc/hosts or the DHCP leases file are answered with "no such domain" 
+#   Bogus private reverse lookups. All reverse lookups for private IP ranges (ie 192.168.x.x, etc)
+#   which are not found in /etc/hosts or the DHCP leases file are answered with "no such domain"
 #   rather than being forwarded upstream. The set of prefixes affected is the list given in RFC6303,
-#   for IPv4 and IPv6. 
+#   for IPv4 and IPv6.
 #
 # @param dnssec
 #   Enable DNSSEC validation and caching.
 #
 # @param dnssec_check_unsigned
-#   Replies which are not DNSSEC signed may be legitimate, because the domain is unsigned, or may be forgeries. 
+#   Replies which are not DNSSEC signed may be legitimate, because the domain is unsigned, or may be forgeries.
 #   Setting this option tells dnsmasq to check that an unsigned reply is OK, by finding a secure proof that a DS
 #   record somewhere between the root and the domain does not exist.
 #   The cost of setting this is that even queries in unsigned domains will need one or more extra DNS queries to verify.
 #
 # @param filterwin2k
-#   Setup this attr true to filter useless windows-originated DNS requests which can trigger dial-on-demand links 
+#   Setup this attr true to filter useless windows-originated DNS requests which can trigger dial-on-demand links
 #   needlessly. Note that (amongst other things) this blocks all SRV requests, so don't use it if you use eg Kerberos,
-#   SIP, XMMP or Google-talk. This option only affects forwarding, SRV records originating for dnsmasq (via srv-host= 
+#   SIP, XMMP or Google-talk. This option only affects forwarding, SRV records originating for dnsmasq (via srv-host=
 #   lines) are not suppressed by it.
 #
 # @param resolv_file
 #   Read the IP addresses of the upstream nameservers from <file>, instead of /etc/resolv.conf. For the
-#   format of this file see resolv.conf(5). 
-#   The only lines relevant to dnsmasq are nameserver ones. Dnsmasq can be told to poll more than one 
-#   resolv.conf file, the first file name specified overrides the default, subsequent ones add to the 
-#   list. This is only allowed when polling; the file with the currently latest modification time is 
-#   the one used. 
-#   Change this line if you want dns to get its upstream servers from somewhere other that /etc/resolv.conf. 
+#   format of this file see resolv.conf(5).
+#   The only lines relevant to dnsmasq are nameserver ones. Dnsmasq can be told to poll more than one
+#   resolv.conf file, the first file name specified overrides the default, subsequent ones add to the
+#   list. This is only allowed when polling; the file with the currently latest modification time is
+#   the one used.
+#   Change this line if you want dns to get its upstream servers from somewhere other that /etc/resolv.conf.
 #   For example, set this attr's value: '/etc/resolv.conf.dnsmasq':
 #
 #   resolv_file => '/etc/resolv.conf.dnsmasq',
@@ -91,7 +91,7 @@
 #   dnsmasq configuration file.
 #
 # @param no_poll
-#   If you don't want dnsmasq to poll /etc/resolv.conf or other resolv files for changes and 
+#   If you don't want dnsmasq to poll /etc/resolv.conf or other resolv files for changes and
 #   re-read them then set this attribute true.
 #
 # @param other_name_servers
@@ -108,14 +108,14 @@
 # @param local_only_domains
 #   Add local-only domains here, queries in these domains are answered from /etc/hosts or DHCP only.
 #   e.g:
-#       local_only_domains => ['/local-example1.org/', '/local-example2.org/'], 
+#       local_only_domains => ['/local-example1.org/', '/local-example2.org/'],
 #
 #
 # @param domains_force_to_ip
 #   Add domains which you want to force to an IP address here.
 #   The example below send any host in double-click.net to a local web-server.
 #     domains_force_to_ip => ['/double-click.net/127.0.0.1'],
-#   
+#
 #   work with IPv6 addresses too.
 #     domains_force_to_ip => ['/www.thekelleys.org.uk/fe80::20d:60ff:fe36:f83'],
 #
@@ -131,7 +131,7 @@
 #     ipset => '/yahoo.com/google.com/vpn,search',
 #
 # @param queries_via_eth
-#   The optional string after the @ character tells dnsmasq how to set the source of the queries to 
+#   The optional string after the @ character tells dnsmasq how to set the source of the queries to
 #   this nameserver. It can either be an ip-address, an interface name or both. The ip-address should
 #   belong to the machine on which dnsmasq is running, otherwise this server line will be logged and
 #   then ignored. If an interface name is given, then queries to the server will be forced via that
@@ -139,7 +139,7 @@
 #   address; and if both are given then a combination of ip-address and interface name will be used
 #   to steer requests to the server. The query-port flag is ignored for any servers which have a source
 #   address specified but the port may be specified directly as part of the source address. Forcing
-#   queries to an interface is not implemented on all platforms supported by dnsmasq. 
+#   queries to an interface is not implemented on all platforms supported by dnsmasq.
 #
 #   You can control how dnsmasq talks to a server by this attribute, or the `queries_via_ip` attribute
 #   shows below. e.g this forces queries to 10.1.2.3 to be routed via eth1:
@@ -193,7 +193,7 @@
 # @param addn_hosts
 #   Additional hosts file. Read the specified file as well as /etc/hosts. If `no_hosts` is given,
 #   read only the specified file. This option may be repeated for more than one additional hosts file.
-#   If a directory is given, then read all the files contained in that directory in alphabetical order. 
+#   If a directory is given, then read all the files contained in that directory in alphabetical order.
 #   e.g
 #
 #     addn_hosts => ['/etc/banner_add_hosts1', '/etc/banner_add_hosts2'],
@@ -279,7 +279,7 @@
 #   on the same network segment. The address is pinged, and if a reply is received, an AAAA record
 #   is added to the DNS for this IPv6 address. Note that this is only happens for directly-connected
 #   networks, (not one doing DHCP via a relay) and it will not work if a host is using privacy
-#   extensions. ra-names can be combined with ra-stateless and slaac. 
+#   extensions. ra-names can be combined with ra-stateless and slaac.
 #   e.g
 #     dhcp_range => ['1234::, ra-names'],
 #
@@ -295,7 +295,7 @@
 #     dhcp_range =>  => ['1234::, ra-stateless'],
 #
 #   Do stateless DHCP, SLAAC, and generate DNS names for SLAAC addresses from DHCPv4 leases.
-#   
+#
 #     dhcp_range => ['1234::, ra-stateless, ra-names'],
 #
 # @param dhcp_enable_ra
@@ -309,7 +309,7 @@
 #   changed for individual subnets with the mode keywords described in --dhcp-range. RFC6106 DNS
 #   parameters are included in the advertisements. By default, the relevant link-local address of
 #   the machine running dnsmasq is sent as recursive DNS server. If provided, the DHCPv6 options
-#   dns-server and domain-search are used for the DNS server (RDNSS) and the domain search list (DNSSL). 
+#   dns-server and domain-search are used for the DNS server (RDNSS) and the domain search list (DNSSL).
 #
 #
 # @param dhcp_host
@@ -317,7 +317,7 @@
 #   hardware address to be always allocated the same hostname, IP address and lease time. A hostname
 #   specified like this overrides any supplied by the DHCP client on the machine. It is also allowable
 #   to omit the hardware address and include the hostname, in which case the IP address and lease times
-#   will apply to any machine claiming that name. 
+#   will apply to any machine claiming that name.
 #
 #   Supply parameters for specified hosts using DHCP. There are lots of valid alternatives, so we will
 #   give examples of each. You can use these syntaxs to add `dhcp_host` array items to setup `dhcp-host`
@@ -359,7 +359,7 @@
 #       dhcp_host => ['id:01:02:02:04,192.168.0.60'],
 #
 #   Example:
-#     Always give the InfiniBand interface with hardware address 
+#     Always give the InfiniBand interface with hardware address
 #     80:00:00:48:fe:80:00:00:00:00:00:00:f4:52:14:03:00:28:05:81
 #     the ip address 192.168.0.61. The client id is derived from the prefix
 #     ff:00:00:00:00:00:02:00:00:02:c9:00 and the last 8 pairs of hex digits of the hardware address.
@@ -408,8 +408,8 @@
 #       dhcp_host => ['id:00:01:00:01:16:d2:83:fc:92:d4:19:e2:d8:b2, fred, [1234::5]'],
 #
 # @param dhcp_ignore
-#   When all the given tags appear in the tag set ignore the host and do not allocate it a DHCP lease. 
-#   Ignore any clients which are not specified in dhcp-host lines or /etc/ethers. Equivalent to ISC 
+#   When all the given tags appear in the tag set ignore the host and do not allocate it a DHCP lease.
+#   Ignore any clients which are not specified in dhcp-host lines or /etc/ethers. Equivalent to ISC
 #   "deny unknown-clients".
 #   e.g
 #     dhcp_ignore => ['tag:!known', 'tag:black'],
@@ -427,7 +427,7 @@
 #
 #   Note that in IPv6 only, vendorclasses are namespaced with an IANA-allocated enterprise number.
 #   This is given with enterprise: keyword and specifies that only vendorclasses matching the
-#   specified number should be searched. 
+#   specified number should be searched.
 #
 #   Item syntax in this attribute::
 #
@@ -459,7 +459,7 @@
 #
 #     dhcp_mac => ['set:3com,01:34:23:*:*:*'],
 #
-#   will set the tag "3com" for any host whose MAC address matches the pattern. 
+#   will set the tag "3com" for any host whose MAC address matches the pattern.
 #
 #   Item syntax in this attribute::
 #
@@ -470,13 +470,13 @@
 #   Read /etc/ethers for information about hosts for the DHCP server. The format of /etc/ethers is
 #   a hardware address, followed by either a hostname or dotted-quad IP address. When read by dnsmasq
 #   these lines have exactly the same effect as `dhcp_host` options containing the same information.
-#   /etc/ethers is re-read when dnsmasq receives SIGHUP. IPv6 addresses are NOT read from /etc/ethers. 
+#   /etc/ethers is re-read when dnsmasq receives SIGHUP. IPv6 addresses are NOT read from /etc/ethers.
 #
 #
 # @param dhcp_option
 #   Specify different or extra options to DHCP clients. By default, dnsmasq sends some standard options
 #   to DHCP clients, the netmask and broadcast address are set to the same as the host running dnsmasq,
-#   and the DNS server and default route are set to the address of the machine running dnsmasq. 
+#   and the DNS server and default route are set to the address of the machine running dnsmasq.
 #   (Equivalent rules apply for IPv6.) If the domain name option has been set, that is sent. This
 #   configuration allows these defaults to be overridden, or other options specified. The option,
 #   to be sent may be given as a decimal number or as "option:<option-name>" The option numbers are
@@ -492,18 +492,18 @@
 #     [tag:<tag>,[tag:<tag>,]][encap:<opt>,][vi-encap:<enterprise>,][vendor:[<vendor-class>],]  \
 #     [<opt>|option:<opt-name>|option6:<opt>|option6:<opt-name>],[<value>[,<value>]]
 #
-#   Data types allowed are comma separated dotted-quad IPv4 addresses, []-wrapped IPv6 addresses, 
+#   Data types allowed are comma separated dotted-quad IPv4 addresses, []-wrapped IPv6 addresses,
 #   a decimal number, colon-separated hex digits and a text string. If the optional tags are given then
 #   this option is only sent when all the tags are matched.
 #
 #   Special processing is done on a text argument for option 119, to conform with RFC 3397. Text or
 #   dotted-quad IP addresses as arguments to option 120 are handled as per RFC 3361. Dotted-quad IP
-#   addresses which are followed by a slash and then a netmask size are encoded as described in RFC 3442. 
+#   addresses which are followed by a slash and then a netmask size are encoded as described in RFC 3442.
 #
-#   IPv6 options are specified using the option6: keyword, followed by the option number or option name. 
+#   IPv6 options are specified using the option6: keyword, followed by the option number or option name.
 #   The IPv6 option name space is disjoint from the IPv4 option name space. IPv6 addresses in options
-#   must be bracketed with square brackets, eg. dhcp_option => ['option6:ntp-server,[1234::56]'] For IPv6, 
-#   [::] means "the global address of the machine running dnsmasq", whilst [fd00::] is replaced with 
+#   must be bracketed with square brackets, eg. dhcp_option => ['option6:ntp-server,[1234::56]'] For IPv6,
+#   [::] means "the global address of the machine running dnsmasq", whilst [fd00::] is replaced with
 #   the ULA, if it exists, and [fe80::] with the link-local address.
 #
 #   Be careful: no checking is done that the correct type of data for the option number is sent, it is
@@ -514,10 +514,10 @@
 #   with encapsulated vendor class options (see below) where dnsmasq cannot determine data size from
 #   the option number. Option data which consists solely of periods and digits will be interpreted by
 #   dnsmasq as an IP address, and inserted into an option as such. To force a literal string, use quotes.
-#   For instance when using option 66 to send a literal IP address as TFTP server name, it is necessary 
+#   For instance when using option 66 to send a literal IP address as TFTP server name, it is necessary
 #   to do dhcp_option = ['66,"1.2.3.4"'].
 #
-# 
+#
 #   Example:
 #     Override the default route supplied by dnsmasq, which assumes the router is the same machine as
 #     the one running dnsmasq.
@@ -527,7 +527,7 @@
 #     Do the same thing, but using the option name:
 #
 #       dhcp_option = ['option:router,1.2.3.4'],
-# 
+#
 #   Example:
 #     Override the default route supplied by dnsmasq and send no default route at all. Note that this
 #     only works for the options sent by default (1, 3, 6, 12, 28) the same line will send a zero-length
@@ -562,7 +562,7 @@
 #
 #   Example:
 #     Set option 59 rebinding time (T2). Defaults to 7/8 of the lease time if not specified. (RFC2132)
-# 
+#
 #       dhcp_option => ['option:T2,2m'],
 #
 #   Example:
@@ -591,7 +591,7 @@
 #       dhcp_option => ['128,e4:45:74:68:00:00', '129,NIC=eepro100'],
 #
 #   Example:
-#     Specify an option which will only be sent to the "red" network (see dhcp-range for the 
+#     Specify an option which will only be sent to the "red" network (see dhcp-range for the
 #     declaration of the "red" network)
 #     Note that the tag: part must precede the option: part.
 #
@@ -649,12 +649,12 @@
 # @param dhcp_option_force
 #   This works in exactly the same way as --dhcp-option except that the option will always be sent,
 #   even if the client does not ask for it in the parameter request list. This is sometimes needed,
-#   for example when sending options to PXELinux. 
-#   
+#   for example when sending options to PXELinux.
+#
 #   Item syntax in this attribute:
-#   
+#
 #     [tag:<tag>,[tag:<tag>,]][encap:<opt>,][vi-encap:<enterprise>,][vendor:[<vendor-class>],]<opt>,[<value>[,<value>]]
-# 
+#
 #   Send options to PXELinux. Note that we need to send the options even though they don't appear in
 #   the parameter request list, so we need to use dhcp-option-force here.
 #   See http://syslinux.zytor.com/pxe.php#special for details.
@@ -679,7 +679,7 @@
 #   (IPv4 only) Set BOOTP options to be returned by the DHCP server. Server name and address are
 #   optional: if not provided, the name is left empty, and the address set to the address of the
 #   machine running dnsmasq. If dnsmasq is providing a TFTP service (see --enable-tftp ) then only
-#   the filename is required here to enable network booting. If the optional tag(s) are given, 
+#   the filename is required here to enable network booting. If the optional tag(s) are given,
 #   they must match for this configuration to be sent. Instead of an IP address, the TFTP server
 #   address can be given as a domain name which is looked up in /etc/hosts. This name can be associated
 #   in /etc/hosts with multiple IP addresses, which are used round-robin. This facility can be used
@@ -762,13 +762,13 @@
 # @param pxe_prompt
 #   Setting this provides a prompt to be displayed after PXE boot. If the timeout is given then after the
 #   timeout has elapsed with no keyboard input, the first available menu option will be automatically
-#   executed. If the timeout is zero then the first available menu item will be executed immediately. 
+#   executed. If the timeout is zero then the first available menu item will be executed immediately.
 #   If --pxe-prompt is omitted the system will wait for user input if there are multiple items in the
 #   menu, but boot immediately if there is only one. See --pxe-service for details of menu items.
 #
 #   Dnsmasq supports PXE "proxy-DHCP", in this case another DHCP server on the network is responsible
 #   for allocating IP addresses, and dnsmasq simply provides the information given in --pxe-prompt and
-#   --pxe-service to allow netbooting. This mode is enabled using the `proxy` keyword in --dhcp-range. 
+#   --pxe-service to allow netbooting. This mode is enabled using the `proxy` keyword in --dhcp-range.
 #
 #   Item syntax in this attribute:
 #
@@ -792,7 +792,7 @@
 #
 #   Most uses of PXE boot-ROMS simply allow the PXE system to obtain an IP address and then download
 #   the file specified by --dhcp-boot and execute it. However the PXE system is capable of more complex
-#   functions when supported by a suitable DHCP server. 
+#   functions when supported by a suitable DHCP server.
 #
 #   This specifies a boot option which may appear in a PXE boot menu. <CSA> is client system type, only
 #   services of the correct type will appear in a menu. The known types are x86PC, PC98, IA64_EFI, Alpha,
@@ -803,12 +803,12 @@
 #   address/name is given. Note that the "layer" suffix (normally ".0") is supplied by PXE, and need not
 #   be added to the basename. Alternatively, the basename may be a filename, complete with suffix, in
 #   which case no layer suffix is added. If an integer boot service type, rather than a basename is
-#   given, then the PXE client will search for a suitable boot service for that type on the network. 
+#   given, then the PXE client will search for a suitable boot service for that type on the network.
 #   This search may be done by broadcast, or direct to a server if its IP address/name is provided. If
 #   no boot service type or filename is provided (or a boot service type of 0 is specified) then the
 #   menu entry will abort the net boot procedure and continue booting from local media. The server
 #   address can be given as a domain name which is looked up in /etc/hosts. This name can be associated
-#   in /etc/hosts with multiple IP addresses, which are used round-robin. 
+#   in /etc/hosts with multiple IP addresses, which are used round-robin.
 #
 #   Examples:
 #     Available boot services. for PXE.
@@ -839,13 +839,13 @@
 #   Enable the TFTP server function. This is deliberately limited to that needed to net-boot a client.
 #   Only reading is allowed; the tsize and blksize extensions are supported (tsize is only supported in
 #   octet mode). Without an argument, the TFTP service is provided to the same set of interfaces as DHCP
-#   service. If the list of interfaces is provided, that defines which interfaces receive TFTP service. 
+#   service. If the list of interfaces is provided, that defines which interfaces receive TFTP service.
 #
 # @param tftp_root
 #   Look for files to transfer using TFTP relative to the given directory. When this is set, TFTP paths
 #   which include ".." are rejected, to stop clients getting outside the specified root. Absolute paths
 #   (starting with /) are allowed, but they must be within the tftp-root. If the optional interface
-#   argument is given, the directory is only used for TFTP requests via that interface. 
+#   argument is given, the directory is only used for TFTP requests via that interface.
 #
 #   Item syntax in this attribute:
 #
@@ -859,21 +859,21 @@
 #
 # @param tftp_secure
 #   Enable TFTP secure mode: without this, any file which is readable by the dnsmasq process under
-#   normal unix access-control rules is available via TFTP. When the --tftp-secure flag is given, 
-#   only files owned by the user running the dnsmasq process are accessible. If dnsmasq is being 
+#   normal unix access-control rules is available via TFTP. When the --tftp-secure flag is given,
+#   only files owned by the user running the dnsmasq process are accessible. If dnsmasq is being
 #   run as root, different rules apply: --tftp-secure has no effect, but only files which have the
 #   world-readable bit set are accessible. It is not recommended to run dnsmasq as root with TFTP
 #   enabled, and certainly not without specifying --tftp-root. Doing so can expose any world-readable
-#   file on the server to any host on the net. 
+#   file on the server to any host on the net.
 #
 # @param tftp_no_blocksize
 #   Stop the TFTP server from negotiating the "blocksize" option with a client. Some buggy clients
-#   request this option but then behave badly when it is granted. 
+#   request this option but then behave badly when it is granted.
 #
 # @param dhcp_lease_max
 #   Limits dnsmasq to the specified maximum number of DHCP leases. The default is 150. This limit is
 #   to prevent DoS attacks from hosts which create thousands of leases and use lots of memory in the
-#   dnsmasq process. 
+#   dnsmasq process.
 #
 # @param dhcp_leasefile
 #   The DHCP server needs somewhere on disk to keep its lease database. This defaults to a sane
@@ -913,19 +913,19 @@
 #
 # @param no_negcache
 #   Disable negative caching. Negative caching allows dnsmasq to remember "no such domain" answers
-#   from upstream nameservers and answer identical queries without forwarding them again. 
+#   from upstream nameservers and answer identical queries without forwarding them again.
 #
 # @param local_ttl
 #   When replying with information from /etc/hosts or configuration or the DHCP leases file dnsmasq
 #   by default sets the time-to-live field to zero, meaning that the requester should not itself cache
-#   the information. This is the correct thing to do in almost all situations. This option allows a 
+#   the information. This is the correct thing to do in almost all situations. This option allows a
 #   time-to-live (in seconds) to be given for these replies. This will reduce the load on the server
-#   at the expense of clients using stale data under some circumstances. 
+#   at the expense of clients using stale data under some circumstances.
 #
 # @param bogus_nxdomain
 #   Transform replies which contain the specified address or subnet into "No such domain" replies.
-#   IPv4 and IPv6 are supported. This is intended to counteract a devious move made by Verisign in 
-#   September 2003 when they started returning the address of an advertising web page in response 
+#   IPv4 and IPv6 are supported. This is intended to counteract a devious move made by Verisign in
+#   September 2003 when they started returning the address of an advertising web page in response
 #   to queries for unregistered names, instead of the correct NXDOMAIN response. This option tells
 #   dnsmasq to fake the correct response when it sees this behaviour. As at Sept 2003 the IP address
 #   being returned by Verisign is 64.94.110.11 .
@@ -944,10 +944,10 @@
 #   for instance --alias=1.2.3.0,6.7.8.0,255.255.255.0 will map 1.2.3.56 to 6.7.8.56 and 1.2.3.67 to
 #   6.7.8.67. This is what Cisco PIX routers call "DNS doctoring". If the old IP is given as range,
 #   then only addresses in the range, rather than a whole subnet, are re-written. So
-#   --alias=192.168.0.10-192.168.0.40,10.0.0.0,255.255.255.0 maps 192.168.0.10->192.168.0.40 to 10.0.0.10->10.0.0.40 
+#   --alias=192.168.0.10-192.168.0.40,10.0.0.0,255.255.255.0 maps 192.168.0.10->192.168.0.40 to 10.0.0.10->10.0.0.40
 #
 #   Item syntax in this attribute:
-#  
+#
 #     [<old-ip>]|[<start-ip>-<end-ip>],<new-ip>[,<mask>]
 #
 #   Examples:
@@ -957,14 +957,14 @@
 #
 # @param mx_host
 #   Item syntax in this attribute:
-#  
+#
 #     <mx name>[[,<hostname>],<preference>]
 #
-#   Return an MX record named <mx name> pointing to the given hostname (if given), or the host 
+#   Return an MX record named <mx name> pointing to the given hostname (if given), or the host
 #   specified in the --mx-target switch or, if that switch is not given, the host on which dnsmasq
-#   is running. The default is useful for directing mail from systems on a LAN to a central server. 
+#   is running. The default is useful for directing mail from systems on a LAN to a central server.
 #   The preference value is optional, and defaults to 1 if not given. More than one MX record may be
-#   given for a host. 
+#   given for a host.
 #
 #   Example:
 #     Return an MX record named "maildomain.com" with target servermachine.com and preference 50
@@ -981,11 +981,11 @@
 #
 # @param localmx
 #   Return an MX record pointing to the host given by --mx-target (or the machine on which dnsmasq is
-#   running) for each local machine. Local machines are those in /etc/hosts or with DHCP leases. 
+#   running) for each local machine. Local machines are those in /etc/hosts or with DHCP leases.
 #
 # @param selfmx
 #   Return an MX record pointing to itself for each local machine. Local machines are those in /etc/hosts
-#   or with DHCP leases. 
+#   or with DHCP leases.
 #
 # @param dns_srv_host
 #   Return a SRV DNS record. See RFC2782 for details. These are useful if you want to serve ldap
@@ -1000,7 +1000,7 @@
 #   be set for this to work.)
 #   The default for the target domain is empty, and the default for port is one and the defaults for
 #   weight and priority are zero. Be careful if transposing data from BIND zone files: the port, weight
-#   and priority numbers are in a different order. 
+#   and priority numbers are in a different order.
 #   More than one SRV record for a given service/domain is allowed, all that match are returned.
 #
 #   Examples:
@@ -1012,7 +1012,7 @@
 #     domain=)
 #
 #       domain       => ['example.com'],
-#       dns_srv_host => ['_ldap._tcp,ldapserver.example.com,389'],  
+#       dns_srv_host => ['_ldap._tcp,ldapserver.example.com,389'],
 #
 #     Two SRV records for LDAP, each with different priorities
 #
@@ -1023,7 +1023,7 @@
 #       dns_srv_host => ['_ldap._tcp.example.com'],
 #
 # @param ptr_record
-#   Return a PTR DNS record. 
+#   Return a PTR DNS record.
 #
 #   This attribute syntax:
 #      <name>[,<target>]
@@ -1036,7 +1036,7 @@
 # @param txt_record
 #   Return a TXT DNS record. The value of TXT record is a set of strings, so any number may be included,
 #   delimited by commas; use quotes to put commas into a string. Note that the maximum length of a
-#   single string is 255 characters, longer strings are split into 255 character chunks. 
+#   single string is 255 characters, longer strings are split into 255 character chunks.
 #   These are used for things like SPF and zeroconf. (Note that the domain-name expansion done for SRV
 #   records _does_not occur for TXT records.)
 #
@@ -1062,7 +1062,7 @@
 #   target in a single line, like so: --cname=cname1,cname2,target
 #
 #   If the time-to-live is given, it overrides the default, which is zero or the value of --local-ttl.
-#   The value is a positive integer and gives the time-to-live in seconds. 
+#   The value is a positive integer and gives the time-to-live in seconds.
 #
 #   Example:
 #     Give host "bert" another name, "bertrand":
@@ -1070,21 +1070,21 @@
 #       dns_cname => ['bertand,bert'],
 #
 # @param log_queries
-#   Log the results of DNS queries handled by dnsmasq. Enable a full cache dump on receipt of SIGUSR1. 
+#   Log the results of DNS queries handled by dnsmasq. Enable a full cache dump on receipt of SIGUSR1.
 #   If the argument "extra" is supplied, ie log_queries => 'extra', then the log has extra information
 #   at the start of each line. This consists of a serial number which ties together the log lines
-#   associated with an individual query, and the IP address of the requestor. 
+#   associated with an individual query, and the IP address of the requestor.
 #
 #   The value for this attribute can be one of: true, false, 'extra'
 #
 # @param log_dhcp
-#   Extra logging for DHCP: log all the options sent to DHCP clients and the tags used to determine them. 
+#   Extra logging for DHCP: log all the options sent to DHCP clients and the tags used to determine them.
 #
 # @param dhcp_name_match
-#   Set the tag if the given name is supplied by a DHCP client. There may be a single trailing 
+#   Set the tag if the given name is supplied by a DHCP client. There may be a single trailing
 #   wildcard *, which has the usual meaning. Combined with dhcp-ignore or dhcp-ignore-names this
 #   gives the ability to ignore certain clients by name, or disallow certain hostnames from being
-#   claimed by a client. 
+#   claimed by a client.
 #
 #   Item syntax in this attribute:
 #
@@ -1095,9 +1095,9 @@
 #
 # @param dhcp_ignore_names
 #   When all the given tags appear in the tag set, ignore any hostname provided by the host. Note that,
-#   unlike --dhcp-ignore, it is permissible to supply no tags, in which case DHCP-client supplied 
+#   unlike --dhcp-ignore, it is permissible to supply no tags, in which case DHCP-client supplied
 #   hostnames are always ignored, and DHCP hosts are added to the DNS using only dhcp-host configuration
-#   in dnsmasq and the contents of /etc/hosts and /etc/ethers. 
+#   in dnsmasq and the contents of /etc/hosts and /etc/ethers.
 #
 #   This attribute syntax:
 #      dhcp-ignore-names[=tag:<tag>[,tag:<tag>]]
@@ -1224,14 +1224,14 @@ define dnsmasq::conf (
   }
 
   if $source {
-    file { "${dnsmasq::config_dir}${priority}-${name}.conf":
+    file { "${dnsmasq::config_dir}/${priority}-${name}.conf":
       ensure => $ensure,
       source => $source,
       notify => Class['dnsmasq::service'],
     }
   }
   else {
-    file { "${dnsmasq::config_dir}${priority}-${name}.conf":
+    file { "${dnsmasq::config_dir}/${priority}-${name}.conf":
       ensure  => $ensure,
       content => template('dnsmasq/dnsmasq.conf.erb'),
       notify  => Class['dnsmasq::service'],
